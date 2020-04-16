@@ -1,5 +1,6 @@
 use std::io;
 use reqwest;
+use regex::Regex;
 
 fn main() -> reqwest::Result<()> {
     println!("Please input your link.");
@@ -11,6 +12,14 @@ fn main() -> reqwest::Result<()> {
 
     let body = reqwest::blocking::get(&link)?
       .text()?;
-    println!("body = {:?}", body);
+    //println!("body = {:?}", body);
+
+    let link_regex = Regex::new(r#"href=(?:"([^"]+)"|'(?:'([^']+)'))"#).unwrap();
+
+    for link in link_regex.captures_iter(&body) {
+        println!("{:?}", link.get(1).unwrap().as_str());
+    }
+
+
     Ok(())
 }
