@@ -1,13 +1,9 @@
 use std::io;
+use reqwest;
 
-fn main() {
-    println!("Input link to be scraped.");
-
-    let mut link = String::new();
-
-    io::stdin().read_line(&mut link)
-    .expect("Failed to read line");
-
-
-    println!("Scraping: {}", link)
-}
+fn main() -> reqwest::Result<()> {
+    let body = reqwest::blocking::get("https://j2.business")?
+      .text()?;
+    println!("body = {:?}", body);
+    Ok(())
+  }
