@@ -25,24 +25,31 @@ fn main() -> reqwest::Result<()> {
         };
     }
 
-    let max = link_list.iter().map(|s| s.len()).max();
-
-    let bar = vec!['-'; max.unwrap()].iter().collect::<String>();
-
-    println!("+-{}-+", bar);
-    println!("| {} {}|", link.trim(), get_padding(link.trim().to_string(), max.unwrap()));
-    println!("+-{}-+", bar);
-
-    for lines in link_list.iter() {
-        println!("| {}{} |", lines, get_padding(lines.to_string(), max.unwrap()));
-    }
-    
-    println!("+-{}-+", bar);
-
+    print_table(link, link_list);
     Ok(())
 }
 
 fn get_padding(s: String, length: usize) -> String {
     let padding = length - s.len();
     vec![' '; padding].iter().collect::<String>()
+}
+
+fn print_table(title: String, list: Vec<String>) {
+    let max = list.iter().map(|s| s.len()).max();
+    let bar = vec!['-'; max.unwrap()].iter().collect::<String>();
+    println!("+-{}-+", bar);
+    println!(
+        "| {}{} |",
+        title.trim(),
+        get_padding(title.trim().to_string(), max.unwrap())
+    );
+    println!("+-{}-+", bar);
+    for lines in list.iter() {
+        println!(
+            "| {}{} |",
+            lines,
+            get_padding(lines.to_string(), max.unwrap())
+        );
+    }
+    println!("+-{}-+", bar);
 }
