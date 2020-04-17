@@ -19,9 +19,11 @@ fn main() -> reqwest::Result<()> {
     for links in link_regex.captures_iter(&body) {
         let current_link = links.get(1).unwrap().as_str();
         if current_link.starts_with("http://") || current_link.starts_with("https://") {
-            println!("{:?}", current_link);
+            println!("{}", current_link);
+        } else if current_link.starts_with("#") {
+
         } else {
-            println!("{}/{:?}", link, current_link);
+            println!("{}/{}", link.trim(), current_link);
         }
     }
 
