@@ -29,13 +29,15 @@ fn main() -> reqwest::Result<()> {
 
     let bar = vec!['-'; max.unwrap()].iter().collect::<String>();
 
-    // println!("{:?}", max);
     println!("+-{}-+", bar);
-    println!("| Scrape results for: {}", link.trim());
+    println!("| {} {}|", link.trim(), get_padding(link.trim().to_string(), max.unwrap()));
     println!("+-{}-+", bar);
+
     for lines in link_list.iter() {
         println!("| {}{} |", lines, get_padding(lines.to_string(), max.unwrap()));
     }
+    
+    println!("+-{}-+", bar);
 
     Ok(())
 }
