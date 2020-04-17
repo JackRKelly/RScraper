@@ -25,9 +25,22 @@ fn main() -> reqwest::Result<()> {
         };
     }
 
-    let sorted = link_list.iter().map(|s| s.len()).max();
+    let max = link_list.iter().map(|s| s.len()).max();
 
-    println!("{:?}", sorted);
+    let bar = vec!['-'; max.unwrap()].iter().collect::<String>();
+
+    // println!("{:?}", max);
+    println!("+-{}-+", bar);
+    println!("| Scrape results for: {}", link.trim());
+    println!("+-{}-+", bar);
+    for lines in link_list.iter() {
+        println!("| {}{} |", lines, get_padding(lines.to_string(), max.unwrap()));
+    }
 
     Ok(())
+}
+
+fn get_padding(s: String, length: usize) -> String {
+    let padding = length - s.len();
+    vec![' '; padding].iter().collect::<String>()
 }
