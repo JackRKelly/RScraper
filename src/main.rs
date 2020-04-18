@@ -19,7 +19,7 @@ fn main() -> reqwest::Result<()> {
         let current_link = links.get(1).unwrap().as_str();
         if current_link.starts_with("http://") || current_link.starts_with("https://") {
             link_list.push(current_link.to_string());
-        } else if current_link.starts_with("#") {
+        } else if current_link.starts_with('#') {
         } else {
             link_list.push(format!("{}/{}", link.trim(), current_link));
         };
@@ -36,14 +36,14 @@ fn get_padding(s: String, length: usize) -> String {
 
 fn print_table(title: String, list: Vec<String>) {
     let max = list.iter().map(|s| s.len()).max();
-    let bar = vec!['-'; max.unwrap()].iter().collect::<String>();
-    println!("+-{}-+", bar);
+    let separator = vec!['-'; max.unwrap()].iter().collect::<String>();
+    println!("+-{}-+", separator);
     println!(
         "| {}{} |",
         title.trim(),
         get_padding(title.trim().to_string(), max.unwrap())
     );
-    println!("+-{}-+", bar);
+    println!("+-{}-+", separator);
     for lines in list.iter() {
         println!(
             "| {}{} |",
@@ -51,5 +51,5 @@ fn print_table(title: String, list: Vec<String>) {
             get_padding(lines.to_string(), max.unwrap())
         );
     }
-    println!("+-{}-+", bar);
+    println!("+-{}-+", separator);
 }
